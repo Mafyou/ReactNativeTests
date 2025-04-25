@@ -1,38 +1,27 @@
-name: React Native Tests CI
+name: Deploy to Expo
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main  # Remplacez par la branche que vous souhaitez surveiller
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      # Checkout code
-      - uses: actions/checkout@v3
-      
-      # Setup Node.js environment
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: '16'
-      
-      # Install dependencies
-      - name: Install Dependencies
-        run: |
-          npm ci
-      
-      # Cache Jest configuration
-      - name: Cache Jest Config
-        uses: actions/cache@v3
-        id: jest-config-cache
-        paths:
-          - node_modules/.cache/jest
-      
-      # Run tests
-      - name: Run Tests
-        run: |
-          npm test
+          node-version: '14'  # Utilisez la version de Node.js que vous préférez
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Publish to Expo
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: npx expo publish
