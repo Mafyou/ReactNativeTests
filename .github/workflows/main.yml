@@ -28,7 +28,7 @@ jobs:
       - name: Login to Expo
         run: |
           echo "Logging in to Expo..."
-          npx expo-cli login -u mafyou -p ${{ secrets.EXPO_TOKEN }} --non-interactive
+          npx expo-cli login -u mafyou -p ${{ secrets.PWD }} --non-interactive
         working-directory: react-native-tests
 
       - name: Publish update with EAS
