@@ -31,7 +31,7 @@ jobs:
       - name: Login to Expo
         run: |
           echo "Logging in to Expo..."
-          npx expo login -u your-expo-username -p ${{ secrets.PWD }}
+          npx expo login -u your-expo-username --password ${{ secrets.PWD }}
         working-directory: react-native-tests
 
       - name: Publish update with EAS
