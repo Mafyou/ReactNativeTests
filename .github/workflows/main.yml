@@ -1,33 +1,33 @@
-name: Expo Publish
+name: Deploy to Expo with EAS
 
 on:
   push:
     branches:
-      - main  # ou la branche de ton choix
+      - main  # Replace with the branch you want to monitor
 
 jobs:
-  publish:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '18.x'
-          cache: 'npm'
-
-      - name: Setup Expo CLI
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
+          node-version: '14'  # Use the Node.js version you prefer
 
       - name: Install dependencies
         run: npm install
 
-      - name: Publish to Expo
-        run: npx expo publish
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Login to Expo
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: eas login --non-interactive --token $EXPO_TOKEN
+
+      - name: Publish update with EAS
+        run: eas update --auto
