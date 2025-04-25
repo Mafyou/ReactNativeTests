@@ -3,7 +3,7 @@ name: Deploy to Expo with EAS
 on:
   push:
     branches:
-      - main  # Replace with the branch you want to monitor
+      - main  # Remplacez par la branche que vous souhaitez surveiller
 
 jobs:
   deploy:
@@ -16,16 +16,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '22.14.0'  # Use the Node.js version you prefer
+          node-version: '16'  # Utilisez une version de Node.js qui supporte les nouvelles fonctionnalités JavaScript
 
       - name: Install dependencies
         run: npm install
+        working-directory: react-native-tests
 
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
       - name: Login to Expo
         run: eas login --non-interactive --token ${{ secrets.EXPO_TOKEN }}
+        working-directory: react-native-tests
 
       - name: Publish update with EAS
         run: eas update --auto
+        working-directory: react-native-tests
