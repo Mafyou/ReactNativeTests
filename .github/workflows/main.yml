@@ -15,7 +15,7 @@ jobs:
         run: yarn install
       
       - name: Run unit tests
-        run: yarn test
+        run: yarn test react-native-tests
       
       - name: Build Android
         env:
