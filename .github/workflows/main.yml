@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Utilisez une version de Node.js qui supporte les nouvelles fonctionnalités JavaScript
+          node-version: '22.14.0'  # Utilisez une version de Node.js qui supporte les nouvelles fonctionnalités JavaScript
 
       - name: Install dependencies
         run: npm install
@@ -26,7 +26,9 @@ jobs:
         run: npm install -g eas-cli
 
       - name: Login to Expo
-        run: eas login --non-interactive --token ${{ secrets.EXPO_TOKEN }}
+        run: |
+          echo "Logging in to Expo..."
+          npx expo-cli login -u mafyou -p ${{ secrets.EXPO_TOKEN }} --non-interactive
         working-directory: react-native-tests
 
       - name: Publish update with EAS
