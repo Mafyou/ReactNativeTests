@@ -1,4 +1,4 @@
-name: Deploy to Expo
+name: Deploy to Expo with EAS
 
 on:
   push:
@@ -21,7 +21,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Publish to Expo
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Login to Expo
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: npx expo publish
+        run: eas login --non-interactive --token $EXPO_TOKEN
+
+      - name: Publish update with EAS
+        run: eas update --auto
