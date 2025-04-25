@@ -1,0 +1,25 @@
+name: Expo CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: yarn install
+      
+      - name: Run unit tests
+        run: yarn test
+      
+      - name: Build Android
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          yarn build:android
+          expo upload:android -t app-archive
