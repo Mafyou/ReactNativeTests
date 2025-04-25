@@ -1,25 +1,38 @@
-name: Expo CI/CD
+name: React Native Tests CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v2
+      # Checkout code
+      - uses: actions/checkout@v3
       
-      - name: Install dependencies
-        run: yarn install
+      # Setup Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
       
-      - name: Run unit tests
-        run: yarn test react-native-tests
-      
-      - name: Build Android
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      # Install dependencies
+      - name: Install Dependencies
         run: |
-          yarn build:android
-          expo upload:android -t app-archive
+          npm ci
+      
+      # Cache Jest configuration
+      - name: Cache Jest Config
+        uses: actions/cache@v3
+        id: jest-config-cache
+        paths:
+          - node_modules/.cache/jest
+      
+      # Run tests
+      - name: Run Tests
+        run: |
+          npm test
