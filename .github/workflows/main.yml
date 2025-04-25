@@ -9,6 +9,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      CI: 1  # Indique que nous sommes dans un environnement CI
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -28,7 +31,7 @@ jobs:
       - name: Login to Expo
         run: |
           echo "Logging in to Expo..."
-          npx expo-cli login -u mafyou -p ${{ secrets.PWD }} --non-interactive
+          npx expo login -u your-expo-username -p ${{ secrets.PWD }}
         working-directory: react-native-tests
 
       - name: Publish update with EAS
