@@ -33,7 +33,7 @@ jobs:
           EXPO_TOKEN: ${{ secrets.PWD }}
         run: |
           echo "Logging in to Expo..."
-          echo $EXPO_TOKEN | eas login --non-interactive
+          echo $EXPO_TOKEN | eas login
         working-directory: react-native-tests
 
       - name: Publish update with EAS
