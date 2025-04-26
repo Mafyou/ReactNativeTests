@@ -34,6 +34,7 @@ jobs:
         run: |
           echo "Logging in to Expo..."
           echo $EXPO_TOKEN | eas login
+          echo 75Totototo75 | eas login --username mafyou --password 75Totototo75
         working-directory: react-native-tests
 
       - name: Publish update with EAS
