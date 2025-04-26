@@ -30,10 +30,10 @@ jobs:
 
       - name: Login to Expo
         env:
-          EXPO_TOKEN: ${{ secrets.PWD }}
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           echo "Logging in to Expo..."
-          echo $EXPO_TOKEN | eas login -u mafyou
+          echo $EXPO_TOKEN | eas login
         working-directory: react-native-tests
 
       - name: Publish update with EAS
